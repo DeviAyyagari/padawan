@@ -2,6 +2,7 @@ import { Question } from '/imports/api/questions/questions.js';
 import { User, Profile, UserType, MyersBriggs, Answer } from '/imports/api/users/users.js';
 import { TypeReading } from '/imports/api/type_readings/type_readings.js';
 import { Meteor } from 'meteor/meteor';
+import { SystemParameters } from '/imports/api/system_parameters/system_parameters.js';
 import './personality.html';
 
 Template.personality.onCreated(function () {
@@ -22,6 +23,14 @@ Template.personality.onCreated(function () {
             }
         });
         console.log(this.subscription2);
+        this.subscription3 = this.subscribe('systemParameters', {
+          onStop: function () {
+            console.log("systemParameters Subscription stopped! ", arguments, this);
+          }, onReady: function () {
+            console.log("systemParameters Subscription ready! ", arguments, this);
+          }
+        });
+        console.log(this.subscription3);
     });
 });
 
@@ -42,8 +51,10 @@ Template.personality.helpers({
         //console.log(category, userObj); //return;
         var identifier = userObj.MyProfile.UserType.Personality.getIdentifierById(category);
         var value = userObj.MyProfile.UserType.Personality[identifier].Value;
-        console.log(category, value, identifier);
-        return (value === 0 ? "?" : (value < 0 ? identifier.slice(0,1) : identifier.slice(1,2)));
+        var questionCount = userObj.MyProfile.UserType.Personality[identifier].QuestionCount;
+        var min_question_count_by_category = parseInt(SystemParameters.findOne({ParameterKey:"min_question_count_by_category"}).ParameterValue);
+        console.log(category, value, identifier, questionCount, min_question_count_by_category);
+        return (value === 0 || questionCount < min_question_count_by_category ? "?" : (value < 0 ? identifier.slice(0,1) : identifier.slice(1,2)));
     }
 });
 

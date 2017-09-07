@@ -6,6 +6,7 @@ import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/add_questions/add_questions.js';
 import '../../ui/pages/admin_teams/admin_teams.js';
+import '../../ui/pages/add_sysparameters/add_sysparameters.js';
 import '../../ui/pages/not-found/not-found.js';
 import '../../ui/layouts/login/login.js';
 
@@ -19,14 +20,14 @@ FlowRouter.route('/', {
 });
 FlowRouter.route('/signin', {
     name: 'signin',
-    action() { 
+    action() {
         BlazeLayout.render('Auth_page', { });
     }
 });
 FlowRouter.route('/addQuestions/:category', {
     triggersEnter: [AccountsTemplates.ensureSignedIn],
     name: 'addQuestions',
-    action(params, queryParams) { 
+    action(params, queryParams) {
         BlazeLayout.render('App_body', { main: 'add_questions' });
     }
 });
@@ -35,6 +36,13 @@ FlowRouter.route('/adminTeams', {
     name: 'adminTeams',
     action(params, queryParams) {
         BlazeLayout.render('App_body', { main: 'admin_teams' });
+    }
+});
+FlowRouter.route('/addSysParameters', {
+    triggersEnter: [AccountsTemplates.ensureSignedIn],
+    name: 'addSysParameters',
+    action(params, queryParams) {
+        BlazeLayout.render('App_body', { main: 'add_sysparameters' });
     }
 });
 FlowRouter.notFound = {

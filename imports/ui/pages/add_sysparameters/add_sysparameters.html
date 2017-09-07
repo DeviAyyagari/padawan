@@ -1,0 +1,70 @@
+<template name="add_sysparameters">
+  <div class="container">
+    <div class="row">
+        <h4>Enter System Parameters</h4>
+    </div>
+    <table style="width: 100%;" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <form id="newSysParameter">
+            <div class="input-group">
+              <input type="text" class="form-control input-medium" name="LeftText" style='height:34px;' placeholder="Parameter" />
+              <span class="input-group-addon">&nbsp;&nbsp;</span>
+              <input type="text" class="form-control input-medium" name="RightText" style='height:34px;' placeholder="Value" />
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-primary new-question" type="submit">Add</button>
+              </span>
+            </div>
+          </form>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <h4>Edit existing System Parameters</h4>
+          </td>
+        </tr>
+      </tbody>
+      <tbody id="SysParamsTable" class="edit-body">
+        {{#each sys_param in sysParameters}}
+        <tr data-id="{{sys_param._id}}" id='{{sys_param._id}}' class="edit-question edit-row">
+          <td>
+            <div class='row'>
+              <div class='col-md-10'>
+                <span style='display:inline-block;width:49%;'>
+                  <em>{{sys_param.ParameterKey}}</em>
+                </span>
+                <span class='edit-sysparam-value' style='display:inline-block;width:49%;'>
+                  <input type='text' data-pid='{{sys_param._id}}' style='cursor:pointer;width:100%;background:rgba(0,0,0,0);border:1px solid rgba(0,0,0,0);font-style:italic;' value={{sys_param.ParameterValue}} disabled/>
+                </span>
+              </div>
+              <div class='col-md-1' style='text-align: right;'>
+                <span class='glyphicon glyphicon-remove delete text-danger' data-pid='{{sys_param._id}}' style='cursor: pointer;'></span>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tempModal" tabindex="-1" role="dialog" aria-labelledby="tempModalLabel">
+      <div class="modal-dialog" role="document" style='margin:0;'>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default closebtn" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-primary savebtn"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
